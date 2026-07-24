@@ -1,6 +1,7 @@
-fastapi
-uvicorn
-python-multipart
-pypdf
-groq
-pydantic-settings
+fastapi==0.110.0
+uvicorn[standard]==0.28.0
+groq==0.5.0
+pypdf==4.1.0
+python-multipart==0.0.9
+pydantic==2.6.4
+pydantic-settings==2.2.1
