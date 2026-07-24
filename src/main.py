@@ -6,14 +6,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic_settings import BaseSettings
 
-# 1. Structured Logging Setup
+# 1. Logging Configuration
 logging.basicConfig(
     level=logging.INFO,
     format='{"time": "%(asctime)s", "level": "%(levelname)s", "module": "%(module)s", "message": "%(message)s"}'
 )
 logger = logging.getLogger("trustguard")
 
-# 2. Environment Settings
+# 2. Settings Management
 class Settings(BaseSettings):
     app_name: str = "TrustGuard Guardian Platform"
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
@@ -24,10 +24,10 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# 3. FastAPI Core Instance
+# 3. Core App Instance
 app = FastAPI(title=settings.app_name, version="3.0.0")
 
-# 4. CORS Configuration
+# 4. Middleware
 origins = [origin.strip() for origin in settings.allowed_origins.split(",")]
 app.add_middleware(
     CORSMiddleware,
@@ -37,7 +37,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 5. Security Middleware
 @app.middleware("http")
 async def apply_security_headers(request: Request, call_next):
     response = await call_next(request)
@@ -46,11 +45,11 @@ async def apply_security_headers(request: Request, call_next):
     response.headers["X-XSS-Protection"] = "1; mode=block"
     return response
 
-# 6. Include API Routers
+# 5. Include Scan Route
 from src.routes.scan import router as scan_router
 app.include_router(scan_router)
 
-# 7. Serve Static Frontend
+# 6. Serve Frontend Static Assets
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 if os.path.exists(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
