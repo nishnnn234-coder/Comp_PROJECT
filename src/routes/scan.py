@@ -12,7 +12,7 @@ MAX_FILE_SIZE = 50 * 1024 * 1024  # 50 MB Payload Limit
 
 @router.post("/scan")
 async def scan_artifact(file: UploadFile = File(...)):
-    # Chunked read to prevent high RAM consumption
+    # Read file in chunks to prevent high memory usage
     contents = bytearray()
     chunk_size = 1024 * 1024  # 1 MB chunks
     
@@ -33,7 +33,7 @@ async def scan_artifact(file: UploadFile = File(...)):
     signature_valid = verify_file_signature(raw_data, filename)
     verdict = calculate_verdict(filename, entropy, signature_valid)
 
-    # 2. Text Content Extraction (if PDF or Text)
+    # 2. Text Content Extraction
     extracted_text = ""
     if filename.endswith(".pdf"):
         try:
