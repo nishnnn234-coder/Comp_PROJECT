@@ -1,0 +1,46 @@
+@keyframes cyberGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.2), inset 0 0 15px rgba(14, 165, 233, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.45), inset 0 0 25px rgba(14, 165, 233, 0.25);
+  }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+@keyframes pulseBorder {
+  0%, 100% { border-color: rgba(56, 189, 248, 0.2); }
+  50% { border-color: rgba(56, 189, 248, 0.8); }
+}
+
+.animated-glow {
+  animation: cyberGlow 4s infinite ease-in-out;
+}
+
+.animated-border {
+  animation: pulseBorder 3s infinite ease-in-out;
+}
+
+.scanline-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline-effect::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), transparent);
+  animation: scanline 3s linear infinite;
+}
+
+.glass-panel {
+  background: rgba(11, 17, 32, 0.85);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
