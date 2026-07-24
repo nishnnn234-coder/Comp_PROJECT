@@ -1,0 +1,10 @@
+{
+  "app_name": "TrustGuard Guardian Cyber Platform",
+  "version": "2.4.0",
+  "environment": "production",
+  "security_policy": {
+    "max_file_size_mb": 100,
+    "entropy_high_risk_threshold": 6.8,
+    "allowed_extensions": ["pdf", "exe", "dll", "zip", "js", "py", "bat", "sh"]
+  }
+}
